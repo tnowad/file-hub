@@ -1,0 +1,23 @@
+{
+	"name": "file-hub",
+	"version": "1.0.0",
+	"description": "A simple file upload project for managing and storing files online, built using TypeScript, Express.js, MongoDB, and REST APIs.",
+	"main": "src/app.ts",
+	"repository": "https://github.com/tnowad/file-hub.git",
+	"author": "Nguyen Minh Tuan",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/dotenv": "^8.2.0",
+		"@types/express": "^4.17.17",
+		"nodemon": "^2.0.20",
+		"ts-node": "^10.9.1",
+		"typescript": "^4.9.5"
+	},
+	"dependencies": {
+		"body-parser": "^1.20.1",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.0",
+		"mongoose": "^6.9.0"
+	}
+}
