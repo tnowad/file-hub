@@ -32,7 +32,7 @@ const userSchema: Schema<IUser, IUserModel> = new Schema({
 })
 
 userSchema.statics.existsWithId = async function existsWithId(_id) {
-  const count = await this.countDocuments({ _id })
+  const count = await this.countDocuments({ _id: _id })
   return count > 0
 }
 
