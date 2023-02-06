@@ -9,9 +9,9 @@ const saltRounds = 10
  */
 
 export const hashPassword = (plainPassword: string) => {
-	const salt = bcrypt.genSaltSync(saltRounds)
-	const hash = bcrypt.hashSync(plainPassword, salt)
-	return hash
+  const salt = bcrypt.genSaltSync(saltRounds)
+  const hash = bcrypt.hashSync(plainPassword, salt)
+  return hash
 }
 
 /**
@@ -21,21 +21,21 @@ export const hashPassword = (plainPassword: string) => {
  * @param {function} callback - The callback function to handle the result
  */
 export const comparePassword = (
-	plainPassword: string,
-	hashedPassword: string,
-	callback: Function,
+  plainPassword: string,
+  hashedPassword: string,
+  callback: Function,
 ) => {
-	bcrypt.compare(
-		plainPassword,
-		hashedPassword,
-		(err: Error | undefined, same: boolean) => {
-			if (err) {
-				callback(err, null)
-			} else {
-				callback(null, same)
-			}
-		},
-	)
+  bcrypt.compare(
+    plainPassword,
+    hashedPassword,
+    (err: Error | undefined, same: boolean) => {
+      if (err) {
+        callback(err, null)
+      } else {
+        callback(null, same)
+      }
+    },
+  )
 }
 
 /**
@@ -45,8 +45,8 @@ export const comparePassword = (
  * @returns {boolean} A boolean indicating if the passwords match or not
  */
 export const comparePasswordSync = (
-	plainPassword: string,
-	hashedPassword: string,
+  plainPassword: string,
+  hashedPassword: string,
 ) => {
-	return bcrypt.compare(plainPassword, hashedPassword)
+  return bcrypt.compare(plainPassword, hashedPassword)
 }
