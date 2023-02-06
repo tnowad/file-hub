@@ -1,5 +1,4 @@
 import { Schema, model, Document, Model, Types } from 'mongoose'
-import IUser from '../interfaces/IUser'
 
 interface IUserSchema extends Document {
   name: string
@@ -15,7 +14,7 @@ interface IUserModel extends Model<IUserSchema> {
   ): Promise<boolean>
   findByUsername(username: string): Promise<string>
 }
-const userSchema: Schema<IUser, IUserModel> = new Schema({
+const userSchema: Schema<IUserSchema, IUserModel> = new Schema({
   name: {
     type: String,
     required: true,

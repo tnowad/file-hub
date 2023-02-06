@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/server.ts",
-    "test": "yarn test",
+    "test": "jest",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "devDependencies": {
