@@ -1,9 +1,9 @@
 import express from 'express'
 import * as dotenv from 'dotenv'
 import apiRoutes from './routes/api.routes'
-dotenv.config()
+import authenticationMiddleware from './public/middleware/authentication.middleware'
 
-const port = process.env.PORT
+dotenv.config()
 
 class App {
 	public app: express.Application

@@ -6,12 +6,13 @@ class ApiRoutes {
 	public router: Router
 	constructor() {
 		this.router = Router()
+		this.routes()
 	}
 	private routes(): void {
 		this.router.use('/user/', userRoutes)
 
 		this.router.post('/login', authenticationControllers.login)
-		this.router.post('register', authenticationControllers.register)
+		this.router.post('/register', authenticationControllers.register)
 	}
 }
 
