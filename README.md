@@ -4,16 +4,16 @@ A simple file upload project for managing and storing files online.
 
 ## Features
 
--   User registration and login
--   File upload
--   File search
+- User registration and login
+- File upload
+- File search
 
 ## Technologies Used
 
--   TypeScript
--   Express.js
--   MongoDB
--   REST APIs
+- TypeScript
+- Express.js
+- MongoDB
+- REST APIs
 
 ## Getting Started
 
@@ -23,8 +23,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 You will need to have the following software installed on your computer:
 
--   Node.js
--   MongoDB
+- Node.js
+- MongoDB
 
 ### Installing
 
