@@ -32,31 +32,31 @@ Follow these steps to set up the project on your local machine:
 
 1. Clone the repository to your local machine
 
-```
+```sh
 git clone https://github.com/tnowad/file-hub.git
 ```
 
 2. Change into the project directory
 
-```
+```sh
 cd file-hub
 ```
 
 3. Install the project dependencies
 
-```
+```sh
 npm install
 ```
 
 4. Start the MongoDB server
 
-```
+```sh
 mongod
 ```
 
 5. Start the Express.js server
 
-```
+```sh
 npm start
 ```
 
