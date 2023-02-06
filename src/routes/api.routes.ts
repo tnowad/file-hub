@@ -1,5 +1,7 @@
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
 import userRoutes from './user.routes'
+import authenticationControllers from '../controllers/authentication.controllers'
+
 class ApiRoutes {
 	public router: Router
 	constructor() {
@@ -7,6 +9,10 @@ class ApiRoutes {
 	}
 	private routes(): void {
 		this.router.use('/user/', userRoutes)
+
+		this.router.post('/login', authenticationControllers.login)
+		this.router.post('register', authenticationControllers.register)
 	}
 }
+
 export default new ApiRoutes().router
