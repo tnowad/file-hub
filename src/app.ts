@@ -7,6 +7,7 @@ import helmet from 'helmet'
 import * as dotenv from 'dotenv'
 import apiRoutes from './routes/api.routes'
 import notFoundMiddleware from './middleware/notFound.middleware'
+import mongoose from 'mongoose'
 
 dotenv.config()
 
@@ -29,7 +30,23 @@ class App {
     )
     this.app.use(helmet())
   }
-  private mongoSetup(): void {}
+  private mongoSetup(): void {
+    const uri = process.env.MONGO_URI as string
+    mongoose.set('strictQuery', true)
+    mongoose
+      .connect(uri, {
+        socketTimeoutMS: 1000,
+        connectTimeoutMS: 1000,
+        serverSelectionTimeoutMS: 1000,
+      })
+      .then(() => {
+        console.log(`> MongoDB connected`)
+      })
+      .catch(() => {
+        console.error('\x1b[7m> Cannot connect MongoDB\x1b[0m')
+        process.exit(0)
+      })
+  }
   private routes(): void {
     this.app.get('/*', express.static(path.join(__dirname, './public')))
     this.app.use('/api/', apiRoutes)

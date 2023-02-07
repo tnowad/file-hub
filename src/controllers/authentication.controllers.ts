@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 const login = (req: Request, res: Response) => {
   const { username, password } = req.body
+  console.log(username, password)
   // ...
   // Check if the provided username and password are valid
   // ...
@@ -9,6 +10,7 @@ const login = (req: Request, res: Response) => {
 
 const register = (req: Request, res: Response) => {
   const { username, password } = req.body
+  console.log(username, password)
   // ...
   // Register a new user
   // ...
