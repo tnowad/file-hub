@@ -1,0 +1,17 @@
+db.createUser( { user: "filehub", pwd: "filehub_password", roles: [ { role:"readWrite",db:"config"}, "dbOwner" ] } );
+show roles
+db.roles
+db.role
+use filehub
+use dbs.filehub
+use db.filehub
+ "clusterAdmin"
+ { role:"readWrite",db:"config"},
+ [
+ roles:
+ pwd:  "hello123",
+ user: "hello_admin",
+{ 
+db.createUser(
+exit
+q
