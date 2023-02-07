@@ -16,10 +16,15 @@ class App {
   constructor() {
     this.app = express()
     this.config()
+    this.middleware()
     this.mongoSetup()
     this.routes()
   }
   private config(): void {
+    // about set view engine
+    // folder view
+  }
+  private middleware(): void {
     this.app.use(morgan('dev'))
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
