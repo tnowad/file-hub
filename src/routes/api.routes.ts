@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import userRoutes from './user.routes'
 import authenticationControllers from '../controllers/authentication.controllers'
+import authenticationMiddleware from '../middleware/authentication.middleware'
 
 class ApiRoutes {
   public router: Router
@@ -9,7 +10,7 @@ class ApiRoutes {
     this.routes()
   }
   private routes(): void {
-    this.router.use('/user/', userRoutes)
+    this.router.use('/user/', authenticationMiddleware, userRoutes)
 
     this.router.post('/login', authenticationControllers.login)
     this.router.post('/register', authenticationControllers.register)
