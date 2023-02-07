@@ -1,7 +1,22 @@
 root: true
-
+env:
+  node: true
+  es6: true
+extends:
+  - 'plugin:@typescript-eslint/recommended'
+  - prettier
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: './tsconfig.json'
+plugins:
+  - '@typescript-eslint'
 rules:
-  eol-last: error
-  indent: [error, 2, { MemberExpression: 'off', SwitchCase: 1 }]
-  no-trailing-spaces: error
-  no-unused-vars: [error, { vars: all, args: none, ignoreRestSiblings: true }]
+  no-eval: error
+  no-debugger: error
+  no-console: error
+  no-var: error
+  no-unsafe-finally: error
+  prefer-const: error
+  prefer-rest-params: error
+  prefer-spread: error
+  no-duplicate-imports: off
