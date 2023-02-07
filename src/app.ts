@@ -1,8 +1,8 @@
 import express from 'express'
 import * as dotenv from 'dotenv'
 import apiRoutes from './routes/api.routes'
-import authenticationMiddleware from './middleware/authentication.middleware'
 import loggerMiddleware from './middleware/logger.middleware'
+import notFoundMiddleware from './middleware/notFound.middleware'
 
 dotenv.config()
 
@@ -20,6 +20,7 @@ class App {
   private mongoSetup(): void {}
   private routes(): void {
     this.app.use('/api/', apiRoutes)
+    this.app.use('*', notFoundMiddleware)
   }
 }
 
