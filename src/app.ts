@@ -3,6 +3,7 @@ import path from 'path'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
+import helmet from 'helmet'
 import * as dotenv from 'dotenv'
 import apiRoutes from './routes/api.routes'
 import notFoundMiddleware from './middleware/notFound.middleware'
@@ -21,7 +22,12 @@ class App {
     this.app.use(morgan('dev'))
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: false }))
-    this.app.use(cors())
+    this.app.use(
+      cors({
+        origin: 'http://localhost:3000',
+      }),
+    )
+    this.app.use(helmet())
   }
   private mongoSetup(): void {}
   private routes(): void {
