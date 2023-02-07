@@ -1,12 +1,18 @@
 import { Schema, model, Document, Model, Types } from 'mongoose'
 
-interface IUserSchema extends Document {
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
+
+export interface IUserSchema extends Document {
   name: string
   email: string
+  role: string
   password: string
 }
 
-interface IUserModel extends Model<IUserSchema> {
+export interface IUserModel extends Model<IUserSchema> {
   existsWithId(_id: string | Types.ObjectId): Promise<boolean>
   existsWithUsername(
     username: string,
@@ -14,7 +20,8 @@ interface IUserModel extends Model<IUserSchema> {
   ): Promise<boolean>
   findByUsername(username: string): Promise<string>
 }
-const userSchema: Schema<IUserSchema, IUserModel> = new Schema({
+
+export const userSchema: Schema<IUserSchema, IUserModel> = new Schema({
   name: {
     type: String,
     required: true,
@@ -23,6 +30,11 @@ const userSchema: Schema<IUserSchema, IUserModel> = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  role: {
+    type: String,
+    enum: UserRole,
+    default: UserRole.USER,
   },
   password: {
     type: String,
@@ -51,6 +63,5 @@ userSchema.statics.findByUsername = function findByUsername(username) {
 }
 
 const User = model<IUserSchema, IUserModel>('User', userSchema)
-export default {
-  User,
-}
+
+export default User
