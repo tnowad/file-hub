@@ -32,9 +32,13 @@ class App {
   }
   private mongoSetup(): void {
     const uri = process.env.MONGO_URI as string
+    const mongoUser = process.env.MONGO_USER as string
+    const mongoPassword = process.env.MONGO_PASSWORD as string
     mongoose.set('strictQuery', true)
     mongoose
       .connect(uri, {
+        user: mongoUser,
+        pass: mongoPassword,
         socketTimeoutMS: 1000,
         connectTimeoutMS: 1000,
         serverSelectionTimeoutMS: 1000,
@@ -42,8 +46,9 @@ class App {
       .then(() => {
         console.log(`> MongoDB connected`)
       })
-      .catch(() => {
+      .catch((error) => {
         console.error('\x1b[7m> Cannot connect MongoDB\x1b[0m')
+        console.error(error)
         process.exit(0)
       })
   }

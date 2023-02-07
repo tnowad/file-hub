@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import userRoutes from './user.routes'
 import authenticationControllers from '../controllers/authentication.controllers'
 import authenticationMiddleware from '../middleware/authentication.middleware'
 import tokenRoutes from './token.routes'
+import userRoutes from './user.routes'
 
 class ApiRoutes {
   public router: Router
