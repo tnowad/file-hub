@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
+import { IUserSchema } from '../Models/user.model'
 const login = (req: Request, res: Response) => {
-  const { username, password } = req.body
-  console.log(username, password)
+  const { email, password } = req.body
+  console.log(email, password)
   // ...
   // Check if the provided username and password are valid
   // ...
@@ -9,8 +10,8 @@ const login = (req: Request, res: Response) => {
 }
 
 const register = (req: Request, res: Response) => {
-  const { username, password } = req.body
-  console.log(username, password)
+  let data: IUserSchema = req.body as IUserSchema
+  console.log(data)
   // ...
   // Register a new user
   // ...

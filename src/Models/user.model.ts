@@ -5,20 +5,39 @@ export enum UserRole {
   USER = 'USER',
 }
 
-export interface IUserSchema extends Document {
+export interface IUser {
   name: string
   email: string
-  role: string
   password: string
+  role?: string
+  lastLogin?: Date
+  createAt?: Date
+  salt?: string
+}
+
+export interface IUserChangePassword extends IUser {
+  newPassword: string
+}
+
+export interface PasswordAndSalt {
+  password: string
+  salt: string
+}
+
+export interface IUserSchema extends IUser, Document {
+  getUserToken(): string
+  changePassword(data: IUserChangePassword): Promise<IUserSchema>
+  changeInformation(data: IUser): Promise<IUserSchema>
+  updateLoginTime(): Promise<IUserSchema>
 }
 
 export interface IUserModel extends Model<IUserSchema> {
-  existsWithId(_id: string | Types.ObjectId): Promise<boolean>
-  existsWithUsername(
-    username: string,
-    exceptionId?: string | Types.ObjectId,
-  ): Promise<boolean>
-  findByUsername(username: string): Promise<string>
+  checkData(data: any): boolean
+  loginValidation(data: IUser, first?: boolean): Promise<IUserSchema>
+  getToken(data: IUserSchema): string
+  createPassword(password: string): Promise<PasswordAndSalt>
+  createUser(data: IUser): Promise<IUserSchema>
+  findByEmail(email: string): Promise<IUserSchema>
 }
 
 export const userSchema: Schema<IUserSchema, IUserModel> = new Schema({
@@ -40,26 +59,58 @@ export const userSchema: Schema<IUserSchema, IUserModel> = new Schema({
     type: String,
     required: true,
   },
+  salt: {
+    type: String,
+    default: process.env.SECRET_KEY || 'SECRET_KEY',
+  },
+  lastLogin: {
+    type: Date,
+    default: Date.now,
+  },
+  createAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
-userSchema.statics.existsWithId = async function existsWithId(_id) {
-  const count = await this.countDocuments({ _id: _id })
-  return count > 0
+userSchema.methods.getUserToken = function (this: IUserSchema): string {
+  return (this.constructor as IUserModel).getToken(this)
 }
 
-userSchema.statics.existsWithUsername = async function existsWithUsername(
-  username,
-  exceptionId,
-) {
-  const count = await this.countDocuments({
-    username,
-    _id: { $ne: exceptionId },
+userSchema.methods.changePassword = function (
+  this: IUserSchema,
+  data: IUserChangePassword,
+): Promise<IUserSchema> {
+  return new Promise<IUserSchema>((resolve, reject) => {
+    ;(this.constructor as IUserModel)
+      .createPassword(data.newPassword)
+      .then((passSalt) => {
+        ;(this.password = passSalt.password), (this.salt = passSalt.salt)
+        this.save()
+          .then((data: IUserSchema) => resolve(data))
+          .catch((error) => reject(error))
+      })
   })
-  return count > 0
 }
 
-userSchema.statics.findByUsername = function findByUsername(username) {
-  return this.findOne({ username })
+userSchema.methods.changeInformation = function (
+  this: IUserSchema,
+  data: IUser,
+): Promise<IUserSchema> {
+  Object.keys(data).forEach((value) => {
+    if (
+      value in this &&
+      value != 'email' &&
+      value != '_id' &&
+      value != 'password' &&
+      value != 'salt' &&
+      value != 'createAt' &&
+      value != 'role'
+    ) {
+      ;(this as any)[value] = (data as any)[value] || (this as any)[value]
+    }
+  })
+  return this.save()
 }
 
 const User = model<IUserSchema, IUserModel>('User', userSchema)
